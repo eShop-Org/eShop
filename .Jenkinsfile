@@ -1,6 +1,6 @@
   
 pipeline {
-   agent {label 'Test'}
+    agent { dockerfile true }
    stages {
       stage("Docker Compose build") {
          steps {
