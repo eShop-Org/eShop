@@ -2,11 +2,6 @@
 pipeline {
     agent any
    stages {
-         stage("createCredentials") {
-         steps {
-            createCredentials
-         }
-      }
       stage("Docker Compose build") {
          steps {
             sh "docker-compose -d --build eShop-Org/eShop:${env.BUILD_ID} ."
