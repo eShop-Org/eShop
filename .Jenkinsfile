@@ -14,7 +14,7 @@ pipeline {
       }
       stage("Docker push") {
          steps {
-           sh "docker push nivzi/eshop:${env.BUILD_ID}"
+           sh "docker push eShop-Org/eshop:${env.BUILD_ID}"
          }
       }
       stage("Docker run ") {
