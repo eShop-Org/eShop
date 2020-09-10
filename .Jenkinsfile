@@ -14,12 +14,12 @@ pipeline {
       }
       stage("Docker push") {
          steps {
-           sh "docker push eshop-org/eshop:${env.BUILD_ID}"
+           sh "docker push nivzi/eshop:${env.BUILD_ID}"
          }
       }
       stage("Docker run ") {
          steps {
-           sh " docker run -d -p 8080:80 --name eshop eshop-org/eshop:${env.BUILD_ID}"
+           sh " docker run -d -p 8080:80 --name eshop nivzi/eshop:${env.BUILD_ID}"
          }
       }
    } 
