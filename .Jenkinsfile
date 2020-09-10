@@ -4,7 +4,7 @@ pipeline {
    stages {
       stage("Docker Compose build") {
          steps {
-            sh "docker-compose -d --build eShop-Org/eShop:${env.BUILD_ID} ."
+            sh "docker-compose -d --build"
          }
       }
       stage("Login to docker hub") {
@@ -14,7 +14,7 @@ pipeline {
       }
       stage("Docker push") {
          steps {
-           sh "ddocker push nivzi/eshop:${env.BUILD_ID}"
+           sh "docker push nivzi/eshop:${env.BUILD_ID}"
          }
       }
       stage("Docker run ") {
