@@ -4,7 +4,7 @@ pipeline {
    stages {
       stage("Docker Compose build") {
          steps {
-            sh "docker-compose -d --build"
+            sh "docker-compose up -d --build"
          }
       }
       stage("Login to docker hub") {
