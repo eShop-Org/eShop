@@ -1,31 +1,58 @@
-  
 pipeline {
-    agent any
-   stages {
-      stage("Docker Compose build") {
-         steps {
-            sh "docker-compose up -d --build"
-         }
-      }
-      stage("Login to docker hub") {
-         steps {
-           sh "docker login --username=${env.DOCKERHUB_USER_NAME} --password=${env.DOCKERHUB_PASSWORD}"
-         }
-      }
-      stage("Docker push") {
-         steps {
-           sh "docker push nivzi/eshop:${env.BUILD_ID}"
-         }
-      }
-      stage("Docker run ") {
-         steps {
-           sh " docker run -d -p 8080:80 --name eshop nivzi/eshop:${env.BUILD_ID}"
-         }
-      }
-   } 
-    post {
-        always {
-            cleanWs deleteDirs: true, notFailBuild: true
-        }
-    }
+	tools{
+		terraform 'terraform-11'
+	}
+  	environment {
+    		registry = "nivzi/"
+    		registryCredential = 'docker-creds'
+  	}
+	agent any
+   	stages {
+		stage('Docker ps') {
+			steps {
+				sh "docker ps"
+			}
+		}
+		stage('Docker-compose build eshopwebmvc') {
+			steps {
+				sh "docker-compose up -d --build eshopwebmvc"
+			}
+		}
+		stage('Docker-compose build eshoppublicapi') {
+			steps {
+				sh "docker-compose up -d --build eshoppublicapi"
+			}
+		}
+		stage('Login to docker hub') {
+			steps {
+				sh "docker login --username=${env.DOCKERHUB_USER_NAME} --password=${env.DOCKERHUB_PASSWORD}"
+			}
+		}
+		stage('Docker push') {
+			steps {
+				sh "docker push  nivzi//eshopwebmvc:${BUILD_NUMBER}"
+				sh "docker push  nivzi/eshoppublicapi:${BUILD_NUMBER}"
+			}
+		}
+		stage('Terraform init') {
+			steps {
+				sh "terraform init"
+			}
+		}
+		stage('Terraform plan') {
+			steps {
+				sh "terraform plan -out eShop.tfplan"
+			}
+		}
+		stage('Terraform apply') {
+			steps {
+				sh "terraform apply --auto-approve"
+			}
+		}
+	}
+	post {
+		always {
+			cleanWs deleteDirs: true, notFailBuild: true
+		}
+	}
 }
