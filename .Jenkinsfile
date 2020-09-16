@@ -6,11 +6,6 @@ pipeline {
   	}
 	agent any
    	stages {
-		stage('Docker run') {
-			steps {
-				sh "docker run -d"
-			}
-		}
 		stage('Docker-compose build eshopwebmvc') {
 			steps {
 				sh "docker-compose up -d --build eshopwebmvc"
