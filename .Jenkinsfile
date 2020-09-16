@@ -1,16 +1,14 @@
 pipeline {
-	tools{
-		terraform 'terraform-11'
-	}
   	environment {
     		registry = "nivzi/"
     		registryCredential = 'docker-creds'
+			IMAGE_TAG = "${BUILD_NUMBER}"
   	}
 	agent any
    	stages {
-		stage('Docker ps') {
+		stage('Docker run') {
 			steps {
-				sh "docker ps"
+				sh "docker run -d"
 			}
 		}
 		stage('Docker-compose build eshopwebmvc') {
