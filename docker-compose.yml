@@ -2,12 +2,12 @@ version: '3.4'
 
 services:
   eshopwebmvc:
-    image: ${DOCKER_REGISTRY-}eshopwebmvc
+    image: ${DOCKER_REGISTRY-}eshopwebmvc:${IMAGE_TAG}
     build:
       context: .
       dockerfile: src/Web/Dockerfile
   eshoppublicapi:
-    image: ${DOCKER_REGISTRY-}eshoppublicapi
+    image: ${DOCKER_REGISTRY-}eshoppublicapi:${IMAGE_TAG}
     build:
       context: .
       dockerfile: src/PublicApi/Dockerfile

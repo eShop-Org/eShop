@@ -1,6 +1,6 @@
 pipeline {
   	environment {
-    		registry = "nivzi/"
+    		DOCKER_REGISTRY = "nivzi/"
     		registryCredential = 'docker-creds'
 			IMAGE_TAG = "${BUILD_NUMBER}"
   	}
@@ -9,6 +9,7 @@ pipeline {
 		stage('Docker-compose build eshopwebmvc') {
 			steps {
 				sh "docker-compose up -d --build eshopwebmvc"
+				
 			}
 		}
 		stage('Docker-compose build eshoppublicapi') {
@@ -23,8 +24,8 @@ pipeline {
 		}
 		stage('Docker push') {
 			steps {
-				sh "docker push  nivzi//eshopwebmvc:${BUILD_NUMBER}"
-				sh "docker push  nivzi/eshoppublicapi:${BUILD_NUMBER}"
+				sh "docker push  ${DOCKER_REGISTRY}eshopwebmvc:${BUILD_NUMBER}"
+				sh "docker push  ${DOCKER_REGISTRY}eshoppublicapi:${BUILD_NUMBER}"
 			}
 		}
 		stage('Terraform init') {
