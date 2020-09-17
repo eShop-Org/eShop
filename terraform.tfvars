@@ -1,4 +1,4 @@
-aws_access_key="AKIAZG5HCPQLIVAS6UCI"
-aws_secret_key="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"
+aws_access_key="AKIASXCGA45JNOX2KG23"
+aws_secret_key="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"
 region="us-east-1"
 private_key_path="~/eShop.pem"
