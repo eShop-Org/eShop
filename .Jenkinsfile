@@ -28,21 +28,21 @@ pipeline {
 				sh "docker push  ${DOCKER_REGISTRY}eshoppublicapi:${BUILD_NUMBER}"
 			}
 		}
-		stage('Terraform init') {
+		stage('Docker Run Pulumi') {
 			steps {
-				sh "terraform init"
+				sh "docker run -it \
+    -e PULUMI_ACCESS_TOKEN \
+    -e AWS_ACCESS_KEY_ID \
+    -e AWS_SECRET_ACCESS_KEY \
+    -e AWS_REGION \
+    -w /app \
+    -v $(pwd):/app \
+    --entrypoint bash \
+    pulumi/pulumi \
+    -c "npm install && pulumi preview --stack dev --non-interactive""
 			}
 		}
-		stage('Terraform plan') {
-			steps {
-				sh "terraform plan -out eShop.tfplan"
-			}
-		}
-		stage('Terraform apply') {
-			steps {
-				sh "terraform apply --auto-approve"
-			}
-		}
+
 	}
 	post {
 		always {
