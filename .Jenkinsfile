@@ -28,19 +28,23 @@ pipeline {
 				sh "docker push  ${DOCKER_REGISTRY}eshoppublicapi:${BUILD_NUMBER}"
 			}
 		}
-		stage('Docker Run Pulumi') {
-			steps {
-				sh "docker run -it \
-    -e pul-cfd769655e2ffcca285ebee5194ba14127502016 \
-    -e AKIAWX64LWONLGEC64EC \
-    -e sGuuzxFPhF8YMv165usSoxfuWAdQ/fTA6aP7GUh2 \
-    -e us-east-1 \
-    -w /app \
-    -v ${pwd}:/app \
-    --entrypoint bash \
-    pulumi/pulumi \
-    -c "npm install && pulumi preview --stack dev --non-interactive""
-			}
+		stage ("Install dependencies") {
+            steps {
+                sh "curl -fsSL https://get.pulumi.com | sh"
+                sh "$HOME/.pulumi/bin/pulumi version"
+            }
+        }
+
+        stage ("Pulumi up") {
+            steps {
+                nodejs(nodeJSInstallationName: "node 14.11.0") {
+                    withEnv(["PATH+PULUMI=$HOME/.pulumi/bin"]) {
+                        sh "cd infrastructure && npm install"
+                        sh "pulumi stack select ${PULUMI_STACK} --cwd infrastructure/"
+                        sh "pulumi up --yes --cwd infrastructure/"
+                    }
+                }
+            }
 		}
 
 	}
