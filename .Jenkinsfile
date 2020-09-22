@@ -36,7 +36,7 @@ pipeline {
     -e sGuuzxFPhF8YMv165usSoxfuWAdQ/fTA6aP7GUh2 \
     -e us-east-1 \
     -w /app \
-    -v $(pwd):/app \
+    -v ${pwd}:/app \
     --entrypoint bash \
     pulumi/pulumi \
     -c "npm install && pulumi preview --stack dev --non-interactive""
