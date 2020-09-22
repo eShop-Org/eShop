@@ -31,10 +31,10 @@ pipeline {
 		stage('Docker Run Pulumi') {
 			steps {
 				sh "docker run -it \
-    -e PULUMI_ACCESS_TOKEN \
-    -e AWS_ACCESS_KEY_ID \
-    -e AWS_SECRET_ACCESS_KEY \
-    -e AWS_REGION \
+    -e pul-cfd769655e2ffcca285ebee5194ba14127502016 \
+    -e AKIAWX64LWONLGEC64EC \
+    -e sGuuzxFPhF8YMv165usSoxfuWAdQ/fTA6aP7GUh2 \
+    -e us-east-1 \
     -w /app \
     -v $(pwd):/app \
     --entrypoint bash \
