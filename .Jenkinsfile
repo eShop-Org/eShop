@@ -39,9 +39,9 @@ pipeline {
             steps {
                 nodejs(nodeJSInstallationName: "node 14.11.0") {
                     withEnv(["PATH+PULUMI=$HOME/.pulumi/bin"]) {
-                        sh "cd infrastructure && npm install"
-                        sh "pulumi stack select ${PULUMI_STACK} --cwd infrastructure/"
-                        sh "pulumi up --yes --cwd infrastructure/"
+                        sh "cd PulumiWebServer && npm install"
+                        sh "pulumi stack select ${PULUMI_STACK} --cwd PulumiWebServer/"
+                        sh "pulumi up --yes --cwd PulumiWebServer/"
                     }
                 }
             }
